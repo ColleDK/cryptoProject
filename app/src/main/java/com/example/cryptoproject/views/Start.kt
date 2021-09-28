@@ -2,17 +2,18 @@ package com.example.cryptoproject.views
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.LinearLayout.HORIZONTAL
+import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cryptoproject.R
 import com.example.cryptoproject.adapters.StartListAdapter
 import com.example.cryptoproject.models.CryptoData
+import com.example.cryptoproject.viewModels.StartViewModel
 
 class Start : AppCompatActivity() {
     private lateinit var listAdapter: StartListAdapter
-    private lateinit var linearLayoutManager: LinearLayoutManager
-
+    private val viewModel: StartViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +25,7 @@ class Start : AppCompatActivity() {
         // TODO change to observer of viewmodel
         val adapterList = mutableListOf<CryptoData>()
         for (i in 0..5) {
-            adapterList.add(CryptoData("Bitcoin","BTC", null, 3.13, i+0.0, 3219.231))
+            adapterList.add(CryptoData("Bitcoin", "BTC", 3.13, i + 0.0, 3219.231))
             println(adapterList[i].toString())
         }
 
@@ -38,6 +39,14 @@ class Start : AppCompatActivity() {
         // set the layoutmanager
         cyclerView.layoutManager = LinearLayoutManager(this)
 
+
+        // create an observer for the cryptos with mvvm pattern
+        viewModel.cryptos.observe(this, Observer {
+            // remove all old elements and add the new ones
+            println("OBSERVED NEW VALUE")
+            adapterList.clear()
+            adapterList.addAll(listOf(it))
+        })
     }
 
 

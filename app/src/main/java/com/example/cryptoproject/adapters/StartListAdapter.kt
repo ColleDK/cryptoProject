@@ -48,9 +48,9 @@ class StartListAdapter(private val cryptos: MutableList<CryptoData>, private var
             this.crypto = cryp
             this.position = pos
             view.findViewById<TextView>(R.id.cryptoName_start).text = cryp.name
-            view.findViewById<TextView>(R.id.cryptoShortName_start).text = cryp.shortName
-            view.findViewById<TextView>(R.id.cryptoPrice_start).text = cryp.price.toString()
-            view.findViewById<TextView>(R.id.cryptoPercent_start).text = cryp.changePercent.toString()
+            view.findViewById<TextView>(R.id.cryptoShortName_start).text = cryp.symbol
+            view.findViewById<TextView>(R.id.cryptoPrice_start).text = cryp.priceUSD.toString()
+            view.findViewById<TextView>(R.id.cryptoPercent_start).text = cryp.changePercent24Hr.toString()
         }
     }
 
