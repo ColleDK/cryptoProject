@@ -12,7 +12,7 @@ class Splash : AppCompatActivity() {
 
 
         // change to the start screen
-        val intent = Intent(this, start::class.java)
+        val intent = Intent(this, Start::class.java)
         startActivity(intent)
         finish()
     }
