@@ -45,12 +45,13 @@ class StartListAdapter(private val cryptos: MutableList<Crypto>, private var ctx
 
         fun bindCrypto(cryp: Crypto, pos: Int){
             // set the crypto and the info into the element
+            // TODO when picture of crypto insert here
             this.crypto = cryp
             this.position = pos
             view.findViewById<TextView>(R.id.cryptoName_start).text = cryp.name
             view.findViewById<TextView>(R.id.cryptoShortName_start).text = cryp.symbol
-            view.findViewById<TextView>(R.id.cryptoPrice_start).text = cryp.priceUsd.toString()
-            view.findViewById<TextView>(R.id.cryptoPercent_start).text = cryp.changePercent24Hr.toString()
+            view.findViewById<TextView>(R.id.cryptoPrice_start).text = String.format("%.3f", cryp.priceUsd)
+            view.findViewById<TextView>(R.id.cryptoPercent_start).text = String.format("%.3f",cryp.changePercent24Hr)
         }
     }
 

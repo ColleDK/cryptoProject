@@ -5,6 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetroFitClient {
 
+    // Will create a retrofit object for the base url of webservice
     val retrofit by lazy {
         Retrofit.Builder()
             .baseUrl(WebService.BASE_URL.url)

@@ -13,8 +13,8 @@ import com.example.cryptoproject.models.Crypto
 import com.example.cryptoproject.viewModels.StartViewModel
 
 class Start : AppCompatActivity() {
-    private lateinit var listAdapter: StartListAdapter
     private val viewModel: StartViewModel by viewModels()
+    private lateinit var adapter: StartListAdapter
     private val listOfCryptos = mutableListOf<Crypto>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,11 +25,10 @@ class Start : AppCompatActivity() {
         val cyclerView = findViewById<RecyclerView>(R.id.recyclerView_start)
 
         // create the adapter
-        listAdapter = StartListAdapter(listOfCryptos, this)
+        adapter = StartListAdapter(listOfCryptos, this)
 
         // set the adapter on the recyclerview
-        cyclerView.adapter = listAdapter
-        //listAdapter.notifyItemInserted(adapterList.size-1)
+        cyclerView.adapter = adapter
 
         // set the layoutmanager
         cyclerView.layoutManager = LinearLayoutManager(this)
@@ -39,12 +38,15 @@ class Start : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+        // If there is no data in our viewmodel we get the information of the cryptos
         viewModel.getCryptos()
+
+        // set up the observer for the viewmodel
         viewModel.cryptoList.observe(this, Observer {
             println(it.toString())
             listOfCryptos.clear()
             listOfCryptos.addAll(it)
-            listAdapter.notifyDataSetChanged()
+            adapter.notifyDataSetChanged()
         })
     }
 }

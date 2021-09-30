@@ -7,6 +7,7 @@ data class Crypto(val name: String,
                   var priceUsd: Double,
                   var changePercent24Hr: Double,
                   var supply: Double) {
+    // The picture of a certain crypto
     var picture : Bitmap? = null
 
     enum class timeInterval{

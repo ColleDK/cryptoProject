@@ -12,6 +12,7 @@ class Splash : AppCompatActivity() {
 
 
         // change to the start screen
+        // TODO make it change after certain amount of time
         val intent = Intent(this, Start::class.java)
         startActivity(intent)
         finish()
