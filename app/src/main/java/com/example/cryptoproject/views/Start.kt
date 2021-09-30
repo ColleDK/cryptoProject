@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cryptoproject.R
 import com.example.cryptoproject.adapters.StartListAdapter
-import com.example.cryptoproject.models.CryptoData
+import com.example.cryptoproject.models.Crypto
 import com.example.cryptoproject.viewModels.StartViewModel
 
 class Start : AppCompatActivity() {
@@ -24,7 +24,7 @@ class Start : AppCompatActivity() {
         val cyclerView = findViewById<RecyclerView>(R.id.recyclerView_start)
 
         // TODO change to observer of viewmodel
-        val adapterList = mutableListOf<CryptoData>()
+        val adapterList = mutableListOf<Crypto>()
 
         // create the adapter
         listAdapter = StartListAdapter(adapterList, this)

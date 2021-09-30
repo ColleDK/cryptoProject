@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cryptoproject.R
-import com.example.cryptoproject.models.CryptoData
+import com.example.cryptoproject.models.Crypto
 
-class StartListAdapter(private val cryptos: MutableList<CryptoData>, private var ctx: Context): RecyclerView.Adapter<StartListAdapter.ViewHolder>() {
+class StartListAdapter(private val cryptos: MutableList<Crypto>, private var ctx: Context): RecyclerView.Adapter<StartListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StartListAdapter.ViewHolder {
         this.ctx = parent.context
@@ -31,7 +31,7 @@ class StartListAdapter(private val cryptos: MutableList<CryptoData>, private var
 
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v), View.OnClickListener {
         private var view: View = v
-        private var crypto: CryptoData? = null
+        private var crypto: Crypto? = null
         private var position: Int? = null
 
         init {
@@ -43,7 +43,7 @@ class StartListAdapter(private val cryptos: MutableList<CryptoData>, private var
             println("Clicked item on position $position")
         }
 
-        fun bindCrypto(cryp: CryptoData, pos: Int){
+        fun bindCrypto(cryp: Crypto, pos: Int){
             // set the crypto and the info into the element
             this.crypto = cryp
             this.position = pos
