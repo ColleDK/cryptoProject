@@ -2,6 +2,7 @@ package com.example.cryptoproject.views
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,10 +25,6 @@ class Start : AppCompatActivity() {
 
         // TODO change to observer of viewmodel
         val adapterList = mutableListOf<CryptoData>()
-        for (i in 0..5) {
-            adapterList.add(CryptoData("Bitcoin", "BTC", 3.13, i + 0.0, 3219.231))
-            println(adapterList[i].toString())
-        }
 
         // create the adapter
         listAdapter = StartListAdapter(adapterList, this)
@@ -40,12 +37,16 @@ class Start : AppCompatActivity() {
         cyclerView.layoutManager = LinearLayoutManager(this)
 
 
+        viewModel.getCrypto("ethereum")
+
         // create an observer for the cryptos with mvvm pattern
         viewModel.cryptos.observe(this, Observer {
             // remove all old elements and add the new ones
             println("OBSERVED NEW VALUE")
+            Log.d("OBSERVER",it.toString())
             adapterList.clear()
             adapterList.addAll(listOf(it))
+            listAdapter.notifyDataSetChanged()
         })
     }
 
