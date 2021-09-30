@@ -1,25 +1,31 @@
 package com.example.cryptoproject.viewModels
 
 import androidx.lifecycle.*
-import com.example.cryptoproject.models.CryptoData
-import com.example.cryptoproject.repositories.CryptoRepository
+import com.example.cryptoproject.models.Crypto
 import com.example.cryptoproject.web.RetroFitClient
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 
 class StartViewModel: ViewModel() {
 
-    private val _cryptos = MutableLiveData<CryptoData>()
-    val cryptos: LiveData<CryptoData> = _cryptos
+    private val _crypto = MutableLiveData<Crypto>()
+    val crypto: LiveData<Crypto> = _crypto
 
-    fun getCrypto(cryptoName: String){
+
+    fun getCrypto(id: String){
         viewModelScope.launch {
-            _cryptos.value = RetroFitClient.retrofit.getCrypto(cryptoName)
+            _crypto.value = RetroFitClient.retrofit.getCrypto(id).data
         }
     }
 
+    private val _cryptoList = MutableLiveData<MutableList<Crypto>>()
+    val cryptoList: LiveData<MutableList<Crypto>> = _cryptoList
+
+    fun getCryptos(){
+        viewModelScope.launch {
+            _cryptoList.value = RetroFitClient.retrofit.getCryptos().data
+        }
+    }
 
 
 }
