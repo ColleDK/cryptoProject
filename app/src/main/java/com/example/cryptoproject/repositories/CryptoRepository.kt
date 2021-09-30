@@ -6,19 +6,19 @@ import javax.inject.Inject
 
 class CryptoRepository @Inject constructor(
     private val webService: WebService,
-    private val cryptoCache: CryptoCache
 ) {
     private val apiKey: String = "Authorization:Bearer 7886b97c-0e4e-4e2c-9870-4b78ddaab437"
 
     suspend fun getCrypto(id: String): Crypto {
-        val cached: Crypto = cryptoCache.get(id)
+        /*val cached: Crypto = cryptoCache.get(id)
         if (cached != null){
             return cached
         }
 
         val freshCrypto = webService.getCrypto(id)
         cryptoCache.put(id, freshCrypto)
-        return freshCrypto
+        return freshCrypto*/
+        return webService.getCrypto(id).data
     }
 
 

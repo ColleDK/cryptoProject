@@ -1,6 +1,7 @@
 package com.example.cryptoproject.web
 
 import com.example.cryptoproject.models.Crypto
+import com.example.cryptoproject.models.Wrapper
 import retrofit2.http.GET
 import retrofit2.http.Path
 
@@ -10,5 +11,5 @@ interface WebService {
     }
 
     @GET("assets/{id}")
-    suspend fun getCrypto(@Path("id") shortName: String): Crypto
+    suspend fun getCrypto(@Path("id") shortName: String): Wrapper
 }

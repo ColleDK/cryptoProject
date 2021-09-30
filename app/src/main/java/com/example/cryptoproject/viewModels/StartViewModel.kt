@@ -19,7 +19,7 @@ class StartViewModel @Inject constructor(
 
     fun getCrypto(id: String){
         viewModelScope.launch {
-            _cryptos.value = RetroFitClient.retrofit.getCrypto(id)
+            _cryptos.value = RetroFitClient.retrofit.getCrypto(id).data
         }
     }
 
