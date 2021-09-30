@@ -2,7 +2,6 @@ package com.example.cryptoproject.models
 
 import android.graphics.Bitmap
 
-@JsonClass(generateAdapter = true)
 data class CryptoData(val name: String,
                       val symbol: String,
                       var priceUSD: Double,
