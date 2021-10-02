@@ -30,7 +30,8 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="21dp"
-                android:text="Name" />
+                android:text="Name"
+                android:textColor="@color/neonBlue"/>
 
             <TextView
                 android:id="@+id/cryptoShortName_start"
@@ -39,7 +40,8 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
-                android:text="Symbol" />
+                android:text="Symbol"
+                android:textColor="@color/neonBlue"/>
         </LinearLayout>
 
         <TextView
@@ -49,7 +51,8 @@
             android:layout_marginStart="31dp"
             android:layout_marginLeft="31dp"
             android:layout_marginTop="34dp"
-            android:text="Price" />
+            android:text="Price"
+            android:textColor="@color/neonBlue"/>
 
         <TextView
             android:id="@+id/cryptoPercent_start"
@@ -57,7 +60,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20sp"
             android:layout_marginTop="35dp"
-            android:text="Percent" />
+            android:text="Percent"
+            android:textColor="@color/neonPink"/>
 
     </LinearLayout>
 

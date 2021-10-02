@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cryptoproject.R
@@ -23,7 +24,7 @@ class StartListAdapter(private val cryptos: MutableList<Crypto>, private var ctx
 
     override fun onBindViewHolder(holder: StartListAdapter.ViewHolder, position: Int) {
         val itemCrypto = cryptos[position]
-        holder.bindCrypto(itemCrypto, position)
+        holder.bindCrypto(itemCrypto, position, ctx)
     }
 
     override fun getItemCount() = cryptos.size
@@ -43,7 +44,7 @@ class StartListAdapter(private val cryptos: MutableList<Crypto>, private var ctx
             println("Clicked item on position $position")
         }
 
-        fun bindCrypto(cryp: Crypto, pos: Int){
+        fun bindCrypto(cryp: Crypto, pos: Int, ctx: Context){
             // set the crypto and the info into the element
             // TODO when picture of crypto insert here
             this.crypto = cryp
@@ -52,6 +53,12 @@ class StartListAdapter(private val cryptos: MutableList<Crypto>, private var ctx
             view.findViewById<TextView>(R.id.cryptoShortName_start).text = cryp.symbol
             view.findViewById<TextView>(R.id.cryptoPrice_start).text = String.format("%.3f", cryp.priceUsd)
             view.findViewById<TextView>(R.id.cryptoPercent_start).text = String.format("%.3f",cryp.changePercent24Hr)
+
+            val color = if (cryp.changePercent24Hr > 0) ctx.resources.getColor(R.color.neonGreen) else ctx.resources.getColor(R.color.neonPink)
+            view.findViewById<TextView>(R.id.cryptoPercent_start).setTextColor(color)
+
+
+            view.findViewById<ImageView>(R.id.cryptoPic_start).setImageBitmap(cryp.picture)
         }
     }
 
