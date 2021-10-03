@@ -1,4 +1,4 @@
-package com.example.cryptoproject.views
+package com.example.cryptoproject.views.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,7 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import com.example.cryptoproject.R
 
-class Splash : AppCompatActivity() {
+class Splash_act : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
@@ -20,7 +20,7 @@ class Splash : AppCompatActivity() {
     }
 
     fun changeActivity(){
-        val intent = Intent(this, Start::class.java)
+        val intent = Intent(this, Start_act::class.java)
         startActivity(intent)
         finish()
     }

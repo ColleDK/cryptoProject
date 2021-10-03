@@ -11,8 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CryptoProject">
-        <activity android:name=".views.Start"></activity>
-        <activity android:name=".views.Splash">
+        <activity android:name=".views.activity.DetailedCrypto_act"></activity>
+        <activity android:name=".views.activity.Start_act" />
+        <activity android:name=".views.activity.Splash_act">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

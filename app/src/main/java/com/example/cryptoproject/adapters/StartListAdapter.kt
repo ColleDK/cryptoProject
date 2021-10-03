@@ -1,14 +1,19 @@
 package com.example.cryptoproject.adapters
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cryptoproject.R
 import com.example.cryptoproject.models.Crypto
+import com.example.cryptoproject.views.activity.DetailedCrypto_act
+import com.example.cryptoproject.views.activity.Start_act
 
 class StartListAdapter(private val cryptos: MutableList<Crypto>, private var ctx: Context): RecyclerView.Adapter<StartListAdapter.ViewHolder>() {
 
@@ -41,12 +46,16 @@ class StartListAdapter(private val cryptos: MutableList<Crypto>, private var ctx
 
 
         override fun onClick(v: View?) {
-            println("Clicked item on position $position")
+            val ctx = v?.context
+            val intent = Intent(ctx, DetailedCrypto_act::class.java)
+            intent.putExtra("currentCrypto", crypto)
+
+            ctx?.startActivity(intent)
+            (ctx as Activity).finish()
         }
 
         fun bindCrypto(cryp: Crypto, pos: Int, ctx: Context){
             // set the crypto and the info into the element
-            // TODO when picture of crypto insert here
             this.crypto = cryp
             this.position = pos
             view.findViewById<TextView>(R.id.cryptoName_start).text = cryp.name

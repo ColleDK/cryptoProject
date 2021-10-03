@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/infotext_portfolio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Your total blablablabla"
+            android:gravity="center"
+            android:layout_weight="2"
+            android:textColor="@color/neonBlue"/>
+
+        <TextView
+            android:id="@+id/portfoliotext_portfolio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="My Portfolio"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:textColor="@color/neonBlue"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView_portfolio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            >
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <Button
+            android:id="@+id/transaction_button_portfolio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Transactions"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+</FrameLayout>
