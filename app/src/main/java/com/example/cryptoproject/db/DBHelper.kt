@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.provider.BaseColumns
 import com.example.cryptoproject.models.Crypto
+import com.example.cryptoproject.models.User
 
 class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VER) {
     private val writableDB: SQLiteDatabase = this.writableDatabase
@@ -23,6 +24,13 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
             const val COL_SUPPLY = "supply"
         }
 
+
+        object UserEntry : BaseColumns{
+            const val TABLE_NAME="User"
+            const val COL_BALANCE = "balance"
+            const val COL_TRANSACTIONS = "transactions"
+        }
+
         private const val SQL_CREATE_ENTRIES_CRYPTO =
             "CREATE TABLE ${CryptoEntry.TABLE_NAME} (" +
                     "${BaseColumns._ID} INTEGER PRIMARY KEY," +
@@ -32,19 +40,28 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
                     "${CryptoEntry.COL_CHANGEPERCENT} DOUBLE," +
                     "${CryptoEntry.COL_SUPPLY} DOUBLE)"
 
+        private const val SQL_CREATE_ENTRIES_USER =
+            "CREATE TABLE ${UserEntry.TABLE_NAME} (" +
+                    "${BaseColumns._ID} INTEGER PRIMARY KEY," +
+                    "${UserEntry.COL_BALANCE} DOUBLE," +
+                    "${UserEntry.COL_TRANSACTIONS} Integer," +
+                    "FOREIGN KEY(${UserEntry.COL_TRANSACTIONS}) REFERENCES Transactions(_id))"
 
 
-        private const val SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS ${CryptoEntry.TABLE_NAME}"
+        private const val SQL_DELETE_ENTRIES_CRYPTO = "DROP TABLE IF EXISTS ${CryptoEntry.TABLE_NAME}"
+        private const val SQL_DELETE_ENTRIES_USER = "DROP TABLE IF EXISTS ${UserEntry.TABLE_NAME}"
     }
 
 
 
     override fun onCreate(db: SQLiteDatabase?) {
         db?.execSQL(SQL_CREATE_ENTRIES_CRYPTO)
+        db?.execSQL(SQL_CREATE_ENTRIES_USER)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        db?.execSQL(SQL_DELETE_ENTRIES)
+        db?.execSQL(SQL_DELETE_ENTRIES_CRYPTO)
+        db?.execSQL(SQL_DELETE_ENTRIES_USER)
         onCreate(db)
     }
 
@@ -98,6 +115,46 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
 
     fun deleteCrypto(crypto: Crypto){
         writableDB.delete(CryptoEntry.TABLE_NAME, "${CryptoEntry.COL_NAME}=?", arrayOf(crypto.name))
+    }
+
+
+    fun getUser(): User{
+        val selectQuery = "SELECT * FROM ${UserEntry.TABLE_NAME}"
+        val cursor = writableDB.rawQuery(selectQuery, null)
+        var balance: Double = 10000.0
+        var transactionIDs: List<Int>
+
+        with(cursor){
+            while (moveToNext()){
+                balance = getDouble(getColumnIndexOrThrow(UserEntry.COL_BALANCE))
+                transactionIDs = listOf(getInt(getColumnIndexOrThrow(UserEntry.COL_TRANSACTIONS)))
+            }
+        }
+        cursor.close()
+        return User(balance, listOf());
+    }
+
+    fun addUser(user: User){
+        val values = ContentValues().apply {
+            put(UserEntry.COL_BALANCE, user.balance)
+            put(UserEntry.COL_TRANSACTIONS, 0)
+        }
+
+        val newRowId = writableDB?.insert(UserEntry.TABLE_NAME, null, values)
+    }
+
+
+    fun updateUser(user: User): Int{
+        val values = ContentValues().apply {
+            put(UserEntry.COL_BALANCE, user.balance)
+            put(UserEntry.COL_TRANSACTIONS, 0)
+        }
+
+        return writableDB.update(UserEntry.TABLE_NAME, values,null, null)
+    }
+
+    fun deleteUser(){
+        writableDB.delete(UserEntry.TABLE_NAME, null, null)
     }
 
 
