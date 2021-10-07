@@ -3,14 +3,14 @@ package com.example.cryptoproject.models
 import android.graphics.Bitmap
 import java.io.Serializable
 
-data class CryptoDto(val name: String,
-                     val symbol: String,
-                     var priceUsd: Double,
-                     var changePercent24Hr: Double,
-                     var supply: Double) : Serializable{
-    // The picture of a certain crypto
-    // Make it transient so it wont be serialized cause problems
-    @Transient var picture : Bitmap? = null
+// Make the picture transient so it wont be serialized cause problems
+data class Crypto(val name: String,
+                  val symbol: String,
+                  var priceUsd: Double,
+                  var changePercent24Hr: Double,
+                  var supply: Double,
+                  @Transient var picture : Bitmap? = null) : Serializable{
+
 
     enum class timeInterval{
         day,

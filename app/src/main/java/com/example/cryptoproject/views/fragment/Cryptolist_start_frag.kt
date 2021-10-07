@@ -16,13 +16,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.cryptoproject.R
 import com.example.cryptoproject.adapters.StartListAdapter
 import com.example.cryptoproject.db.DBHelper
-import com.example.cryptoproject.models.CryptoDto
+import com.example.cryptoproject.models.Crypto
 import com.example.cryptoproject.viewModels.StartViewModel
 
 class Cryptolist_start_frag : Fragment(), View.OnClickListener {
     private val viewModel: StartViewModel by viewModels()
     private lateinit var adapter: StartListAdapter
-    private val listOfCryptos = mutableListOf<CryptoDto>()
+    private val listOfCryptos = mutableListOf<Crypto>()
     private var dbHelper: DBHelper? = null
     private var prefs: SharedPreferences? = null
 
@@ -63,7 +63,7 @@ class Cryptolist_start_frag : Fragment(), View.OnClickListener {
         viewModel.getCryptos()
 
         // set up the observer for the viewmodel
-        viewModel.cryptoDtoList.observe(this, Observer {
+        viewModel.cryptoList.observe(this, Observer {
             println(it.toString())
             listOfCryptos.clear()
             listOfCryptos.addAll(it)

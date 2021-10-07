@@ -1,7 +1,7 @@
 package com.example.cryptoproject.web
 
-import com.example.cryptoproject.models.wrapper.WrapperCrypto
-import com.example.cryptoproject.models.wrapper.WrapperCryptos
+import com.example.cryptoproject.web.wrapper.WrapperCrypto
+import com.example.cryptoproject.web.wrapper.WrapperCryptos
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.GET

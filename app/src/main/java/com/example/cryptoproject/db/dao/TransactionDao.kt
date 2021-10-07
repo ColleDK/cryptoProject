@@ -11,7 +11,7 @@ interface TransactionDao {
     @Query("SELECT * FROM TransactionEntity ORDER BY timestamp DESC")
     suspend fun getTransactionsInOrder(): List<TransactionEntity>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTransaction(vararg transactions: TransactionEntity)
 
     @Delete
