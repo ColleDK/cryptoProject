@@ -11,7 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,13 +18,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.cryptoproject.R
 import com.example.cryptoproject.adapters.StartListAdapter
 import com.example.cryptoproject.db.DBHelper
-import com.example.cryptoproject.models.Crypto
+import com.example.cryptoproject.models.CryptoDto
 import com.example.cryptoproject.viewModels.StartViewModel
 
 class Userportfolio_frag : Fragment(), View.OnClickListener  {
     private val viewModel: StartViewModel by viewModels()
     private lateinit var adapter: StartListAdapter
-    private val listOfCryptos = mutableListOf<Crypto>()
+    private val listOfCryptos = mutableListOf<CryptoDto>()
     private var dbHelper: DBHelper? = null
     private var prefs: SharedPreferences? = null
     private lateinit var transactionButton: Button
@@ -75,7 +74,7 @@ class Userportfolio_frag : Fragment(), View.OnClickListener  {
         viewModel.getCryptos()
 
         // set up the observer for the viewmodel
-        viewModel.cryptoList.observe(this, Observer {
+        viewModel.cryptoDtoList.observe(this, Observer {
             println(it.toString())
             listOfCryptos.clear()
             listOfCryptos.addAll(it)

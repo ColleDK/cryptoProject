@@ -5,8 +5,8 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.provider.BaseColumns
-import com.example.cryptoproject.models.Crypto
-import com.example.cryptoproject.models.User
+import com.example.cryptoproject.models.CryptoDto
+import com.example.cryptoproject.models.UserDto
 
 class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VER) {
     private val writableDB: SQLiteDatabase = this.writableDatabase
@@ -70,9 +70,9 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
     }
 
 
-    val allCryptos:MutableList<Crypto>
+    val allCryptoDtos:MutableList<CryptoDto>
         get() {
-            val listCryptos = mutableListOf<Crypto>()
+            val listCryptos = mutableListOf<CryptoDto>()
             val selectQuery = "SELECT * FROM ${CryptoEntry.TABLE_NAME}"
             val cursor = writableDB.rawQuery(selectQuery, null)
             with(cursor){
@@ -82,43 +82,43 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
                     val price = getDouble(getColumnIndexOrThrow(CryptoEntry.COL_PRICE))
                     val changePercent = getDouble(getColumnIndexOrThrow(CryptoEntry.COL_CHANGEPERCENT))
                     val supply = getDouble(getColumnIndexOrThrow(CryptoEntry.COL_SUPPLY))
-                    listCryptos.add(Crypto(name, symbol, price, changePercent, supply))
+                    listCryptos.add(CryptoDto(name, symbol, price, changePercent, supply))
                 }
             }
             cursor.close()
             return listCryptos
         }
 
-    fun addCrypto(crypto: Crypto){
+    fun addCrypto(cryptoDto: CryptoDto){
         val values = ContentValues().apply {
-            put(CryptoEntry.COL_NAME, crypto.name)
-            put(CryptoEntry.COL_SYMBOL, crypto.symbol)
-            put(CryptoEntry.COL_PRICE, crypto.priceUsd)
-            put(CryptoEntry.COL_CHANGEPERCENT, crypto.changePercent24Hr)
-            put(CryptoEntry.COL_SUPPLY, crypto.supply)
+            put(CryptoEntry.COL_NAME, cryptoDto.name)
+            put(CryptoEntry.COL_SYMBOL, cryptoDto.symbol)
+            put(CryptoEntry.COL_PRICE, cryptoDto.priceUsd)
+            put(CryptoEntry.COL_CHANGEPERCENT, cryptoDto.changePercent24Hr)
+            put(CryptoEntry.COL_SUPPLY, cryptoDto.supply)
         }
 
         val newRowId = writableDB?.insert(CryptoEntry.TABLE_NAME, null, values)
     }
 
-    fun updateCrypto(crypto: Crypto): Int{
+    fun updateCrypto(cryptoDto: CryptoDto): Int{
         val values = ContentValues().apply {
-            put(CryptoEntry.COL_NAME, crypto.name)
-            put(CryptoEntry.COL_SYMBOL, crypto.symbol)
-            put(CryptoEntry.COL_PRICE, crypto.priceUsd)
-            put(CryptoEntry.COL_CHANGEPERCENT, crypto.changePercent24Hr)
-            put(CryptoEntry.COL_SUPPLY, crypto.supply)
+            put(CryptoEntry.COL_NAME, cryptoDto.name)
+            put(CryptoEntry.COL_SYMBOL, cryptoDto.symbol)
+            put(CryptoEntry.COL_PRICE, cryptoDto.priceUsd)
+            put(CryptoEntry.COL_CHANGEPERCENT, cryptoDto.changePercent24Hr)
+            put(CryptoEntry.COL_SUPPLY, cryptoDto.supply)
         }
 
-        return writableDB.update(CryptoEntry.TABLE_NAME, values, "${CryptoEntry.COL_NAME}=?", arrayOf(crypto.name))
+        return writableDB.update(CryptoEntry.TABLE_NAME, values, "${CryptoEntry.COL_NAME}=?", arrayOf(cryptoDto.name))
     }
 
-    fun deleteCrypto(crypto: Crypto){
-        writableDB.delete(CryptoEntry.TABLE_NAME, "${CryptoEntry.COL_NAME}=?", arrayOf(crypto.name))
+    fun deleteCrypto(cryptoDto: CryptoDto){
+        writableDB.delete(CryptoEntry.TABLE_NAME, "${CryptoEntry.COL_NAME}=?", arrayOf(cryptoDto.name))
     }
 
 
-    fun getUser(): User{
+    fun getUser(): UserDto{
         val selectQuery = "SELECT * FROM ${UserEntry.TABLE_NAME}"
         val cursor = writableDB.rawQuery(selectQuery, null)
         var balance: Double = 10000.0
@@ -131,12 +131,12 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
             }
         }
         cursor.close()
-        return User(balance, listOf());
+        return UserDto(balance, listOf());
     }
 
-    fun addUser(user: User){
+    fun addUser(userDto: UserDto){
         val values = ContentValues().apply {
-            put(UserEntry.COL_BALANCE, user.balance)
+            put(UserEntry.COL_BALANCE, userDto.balance)
             put(UserEntry.COL_TRANSACTIONS, 0)
         }
 
@@ -144,9 +144,9 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
     }
 
 
-    fun updateUser(user: User): Int{
+    fun updateUser(userDto: UserDto): Int{
         val values = ContentValues().apply {
-            put(UserEntry.COL_BALANCE, user.balance)
+            put(UserEntry.COL_BALANCE, userDto.balance)
             put(UserEntry.COL_TRANSACTIONS, 0)
         }
 

@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.cryptoproject"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -43,18 +43,36 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.3.1'
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'org.jetbrains.kotlin:kotlin-reflect:1.5.31'
+
+    // retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.7.2'
     implementation 'com.squareup.okhttp3:okhttp:3.14.9'
 
+    // making charts
+    implementation 'com.github.AnyChart:AnyChart-Android:1.1.2'
+
+    // picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
+
     implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
     implementation 'androidx.fragment:fragment-ktx:1.3.6'
     implementation 'com.android.support:multidex:1.0.3'
+
+    // hilt
     implementation "com.google.dagger:hilt-android:2.38.1"
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     kapt "com.google.dagger:hilt-compiler:2.38.1"
+
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+
+    def room_version = "2.3.0"
+
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+
+
 }

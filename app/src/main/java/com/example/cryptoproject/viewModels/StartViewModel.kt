@@ -2,7 +2,7 @@ package com.example.cryptoproject.viewModels
 
 import android.graphics.BitmapFactory
 import androidx.lifecycle.*
-import com.example.cryptoproject.models.Crypto
+import com.example.cryptoproject.models.CryptoDto
 import com.example.cryptoproject.web.RetroFitClient
 import kotlinx.coroutines.launch
 import okhttp3.ResponseBody
@@ -12,8 +12,8 @@ import retrofit2.Response
 
 class StartViewModel: ViewModel() {
     // Variables for a single crypto data to be observed
-    private val _crypto = MutableLiveData<Crypto>()
-    val crypto: LiveData<Crypto> = _crypto
+    private val _crypto = MutableLiveData<CryptoDto>()
+    val cryptoDto: LiveData<CryptoDto> = _crypto
 
     // Get a specific crypto based on their id/name
     fun getCrypto(id: String){
@@ -23,8 +23,8 @@ class StartViewModel: ViewModel() {
     }
 
     // Variables for a set of crypto data to be observed (all)
-    private val _cryptoList = MutableLiveData<MutableList<Crypto>>()
-    val cryptoList: LiveData<MutableList<Crypto>> = _cryptoList
+    private val _cryptoList = MutableLiveData<MutableList<CryptoDto>>()
+    val cryptoDtoList: LiveData<MutableList<CryptoDto>> = _cryptoList
 
     // Get all cryptos
     fun getCryptos(){
@@ -37,14 +37,14 @@ class StartViewModel: ViewModel() {
         }
     }
 
-    fun getCryptoPics(crypto: Crypto){
+    fun getCryptoPics(cryptoDto: CryptoDto){
         // check if the crypto is in the current data
-        if (_cryptoList.value!!.indexOf(crypto) == -1) _cryptoList.value?.add(crypto)
+        if (_cryptoList.value!!.indexOf(cryptoDto) == -1) _cryptoList.value?.add(cryptoDto)
         viewModelScope.launch {
-            RetroFitClient.retrofitPic.getCryptoPics(crypto.symbol.toLowerCase()).enqueue(object: retrofit2.Callback<ResponseBody> {
+            RetroFitClient.retrofitPic.getCryptoPics(cryptoDto.symbol.toLowerCase()).enqueue(object: retrofit2.Callback<ResponseBody> {
                 override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                     if (response.isSuccessful){
-                        _cryptoList.value?.get(_cryptoList.value!!.indexOf(crypto))?.picture = BitmapFactory.decodeStream(response.body()?.byteStream())
+                        _cryptoList.value?.get(_cryptoList.value!!.indexOf(cryptoDto))?.picture = BitmapFactory.decodeStream(response.body()?.byteStream())
                     }
                 }
 
@@ -56,9 +56,9 @@ class StartViewModel: ViewModel() {
     }
 
     // get single cryptos picture
-    fun getCryptoPic(crypto: Crypto){
+    fun getCryptoPic(cryptoDto: CryptoDto){
         viewModelScope.launch {
-            RetroFitClient.retrofitPic.getCryptoPics(crypto.symbol.toLowerCase()).enqueue(object: retrofit2.Callback<ResponseBody> {
+            RetroFitClient.retrofitPic.getCryptoPics(cryptoDto.symbol.toLowerCase()).enqueue(object: retrofit2.Callback<ResponseBody> {
                 override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                     if (response.isSuccessful){
                         _crypto.value?.picture = BitmapFactory.decodeStream(response.body()?.byteStream())

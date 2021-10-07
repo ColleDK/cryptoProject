@@ -5,20 +5,19 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.activity.viewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cryptoproject.R
 import com.example.cryptoproject.adapters.StartListAdapter
-import com.example.cryptoproject.models.Crypto
+import com.example.cryptoproject.models.CryptoDto
 import com.example.cryptoproject.viewModels.StartViewModel
 
 class DetailedCrypto_act : AppCompatActivity() {
     private val viewModel: StartViewModel by viewModels()
     private lateinit var cyclerView: RecyclerView
     private lateinit var adapter: StartListAdapter
-    private lateinit var currentCrypt: Crypto
+    private lateinit var currentCrypt: CryptoDto
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,12 +26,12 @@ class DetailedCrypto_act : AppCompatActivity() {
         cyclerView = findViewById(R.id.recyclerView_detailedCrypto)
 
         // get the crypto from the intent
-        currentCrypt = (intent.getSerializableExtra("currentCrypto") as? Crypto)!!
+        currentCrypt = (intent.getSerializableExtra("currentCrypto") as? CryptoDto)!!
 
         // get the picture of the crypto
         viewModel.getCryptoPic(currentCrypt)
 
-        viewModel.crypto.observe(this, Observer {
+        viewModel.cryptoDto.observe(this, Observer {
             println(it.toString())
             currentCrypt = it
 

@@ -8,14 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cryptoproject.R
-import com.example.cryptoproject.models.Crypto
+import com.example.cryptoproject.models.CryptoDto
 import com.example.cryptoproject.views.activity.DetailedCrypto_act
-import com.example.cryptoproject.views.activity.Start_act
 
-class StartListAdapter(private val cryptos: MutableList<Crypto>, private var ctx: Context): RecyclerView.Adapter<StartListAdapter.ViewHolder>() {
+class StartListAdapter(private val cryptoDtos: MutableList<CryptoDto>, private var ctx: Context): RecyclerView.Adapter<StartListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StartListAdapter.ViewHolder {
         this.ctx = parent.context
@@ -28,16 +26,16 @@ class StartListAdapter(private val cryptos: MutableList<Crypto>, private var ctx
     }
 
     override fun onBindViewHolder(holder: StartListAdapter.ViewHolder, position: Int) {
-        val itemCrypto = cryptos[position]
+        val itemCrypto = cryptoDtos[position]
         holder.bindCrypto(itemCrypto, position, ctx)
     }
 
-    override fun getItemCount() = cryptos.size
+    override fun getItemCount() = cryptoDtos.size
 
 
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v), View.OnClickListener {
         private var view: View = v
-        private var crypto: Crypto? = null
+        private var cryptoDto: CryptoDto? = null
         private var position: Int? = null
 
         init {
@@ -48,15 +46,15 @@ class StartListAdapter(private val cryptos: MutableList<Crypto>, private var ctx
         override fun onClick(v: View?) {
             val ctx = v?.context
             val intent = Intent(ctx, DetailedCrypto_act::class.java)
-            intent.putExtra("currentCrypto", crypto)
+            intent.putExtra("currentCrypto", cryptoDto)
 
             ctx?.startActivity(intent)
             (ctx as Activity).finish()
         }
 
-        fun bindCrypto(cryp: Crypto, pos: Int, ctx: Context){
+        fun bindCrypto(cryp: CryptoDto, pos: Int, ctx: Context){
             // set the crypto and the info into the element
-            this.crypto = cryp
+            this.cryptoDto = cryp
             this.position = pos
             view.findViewById<TextView>(R.id.cryptoName_start).text = cryp.name
             view.findViewById<TextView>(R.id.cryptoShortName_start).text = cryp.symbol
